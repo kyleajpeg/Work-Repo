@@ -7,7 +7,7 @@
 
 import subprocess
 import os
-import time
+import re
 import platform
 import ipaddress
 
@@ -211,7 +211,7 @@ def memory_info():
     string_list.append(f"Available RAM:                  {available_ram} {available_ram_unit}\n\n")
     return "".join(string_list)
 
-def get_all_output(): 
+def get_all_output(): # getting all output as a string
     string_list = []
     string_list.append(create_header())
     string_list.append(device_info())
@@ -222,19 +222,24 @@ def get_all_output():
     string_list.append(memory_info())
     return "".join(string_list)
 
-def to_log_file(output):
-    hostname = platform.node()
-    home_dir = os.path.expanduser("~")
-    log_file_path = os.path.join(home_dir, f"{hostname}_system_report.log")
-    with open(log_file_path, 'w') as file:
-        file.write(output)
+def remove_ansi_colors(text):
+    ansi_escape = re.compile(r'\033\[[0-9;]*m') # regular expression for ANSI color codes which need to be removed
+    return ansi_escape.sub('', text)
+
+def to_log_file(text):
+    clean_text = remove_ansi_colors(text) # removes color codes so log file isn't silly looking
+    hostname = platform.node() # gets the hostname
+    home_dir = os.path.expanduser("~") # expanding to user home directory
+    log_file_path = os.path.join(home_dir, f"{hostname}_system_report.log") # log file path
+    with open(log_file_path, 'w') as file: 
+        file.write(clean_text)
 
 
 def main():
     clear_screen()
     all_output = get_all_output()
     print(all_output, end="")
-    
+    to_log_file(all_output)
 
 if __name__ == "__main__":
     main()
