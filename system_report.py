@@ -130,18 +130,33 @@ def storage_info():
     total_space = "Unknown"
     used_space = "Unknown"
     free_space = "Unknown"
+    total_unit = "Error: Unit not found"
+    used_unit = "Error: Unit not found"
+    free_unit = "Error: Unit not found"
+    unit_options = {
+        'G': "GiB",
+        'K': "KB",
+        'M': "MB"
+    }
     result = subprocess.run(['df', '-h'], capture_output=True, text=True) # better command to find disk usage
     for line in result.stdout.splitlines():
         if 'mapper' in line:
             sdrive_line = line.strip().split()
-            total_space = round(float(sdrive_line[1].split("G")[0])) # splits to grab number before 'G'
-            used_space = round(float(sdrive_line[2].split("G")[0])) # grabs the used GiB
-            free_space = round(float(sdrive_line[3].split("G")[0])) # grabs the available GiB
+            for key in unit_options:
+                if key in sdrive_line[1]:
+                    total_space = round(float(sdrive_line[1].split(key)[0])) # splits to grab number before the unit
+                    total_unit = unit_options[key]
+                if key in sdrive_line[2]:
+                    used_space = round(float(sdrive_line[2].split(key)[0])) # grabs the used space in the line
+                    used_unit = unit_options[key]
+                if key in sdrive_line[3]:
+                    free_space = round(float(sdrive_line[3].split(key)[0])) # grabs the available in the line
+                    free_unit = unit_options[key]
     string_list = []
     string_list.append(f"{GREEN}Storage Information{RESET}\n")
-    string_list.append(f"System Drive Total:             {total_space} GiB\n")
-    string_list.append(f"System Drive Used:              {used_space} GiB\n")
-    string_list.append(f"System Drive Free:              {free_space} GiB\n")
+    string_list.append(f"System Drive Total:             {total_space} {total_unit}\n")
+    string_list.append(f"System Drive Used:              {used_space} {used_unit}\n")
+    string_list.append(f"System Drive Free:              {free_space} {free_unit}\n")
     return "".join(string_list)
 
 
@@ -172,44 +187,23 @@ def memory_info():
         if 'Mem:' in line:
             ram_line = line.strip().split()
             total_ram = ram_line[1].split("G")[0] # accessed at line index 1, splitting to only grab number
-            available_ram = ram_line[5].split("G")[0] # accessed at linx index 5, also splitting
+            available_ram = ram_line[6].split("G")[0] # accessed at linx index 6, also splitting
     string_list = []
     string_list.append(f"{GREEN}Memory Information{RESET}\n")
     string_list.append(f"Total RAM:                      {total_ram} GiB\n")
     string_list.append(f"Available RAM:                  {available_ram} GiB\n")
     return "".join(string_list)
 
-def get_all_output():
-    # print             ("                    "+f"{RED}System Report{RESET} - {month} {day}, {year}\n")
-
-    # string_list.append(f"Hostname:                       {hostname}\n")
-    # string_list.append(f"Domain:                         {domain}\n")
-
-    # string_list.append(f"IP Address:                     {ip_addr}\n")
-    # string_list.append(f"Gateway:                        {gateway}\n")
-    # string_list.append(f"Network Mask:                   {network_mask}\n")
-    # string_list.append(f"DNS1:                           {dns_servers[0]}\n")
-    # string_list.append(f"DNS2:                           {dns_servers[1]}\n")
-
-    # string_list.append(f"Operating System:               {os_name}\n")
-    # string_list.append(f"OS Version:                     {version_id}\n")
-    # string_list.append(f"Kernel Version:                 {kernel_version}\n")
-
-    # string_list.append(f"System Drive Total:             {total_space} GiB\n")
-    # string_list.append(f"System Drive Used:              {used_space} GiB\n")
-    # string_list.append(f"System Drive Free:              {free_space} GiB\n")
-
-    # string_list.append(f"CPU Model:                      {model_name}\n")
-    # string_list.append(f"Number of processors:           {num_processors}\n")
-    # string_list.append(f"Number of cores:                {num_cores}\n")
-
-
-    # string_list.append(f"Total RAM:                      {total_ram} GiB\n")
-    # string_list.append(f"Available RAM:                  {available_ram} GiB\n")
-
-
-
-    return
+def get_all_output(): 
+    string_list = []
+    string_list.append(create_header())
+    string_list.append(device_info())
+    string_list.append(network_info())
+    string_list.append(os_info())
+    string_list.append(storage_info())
+    string_list.append(processor_info())
+    string_list.append(memory_info())
+    return "".join(string_list)
 
 def to_log_file():
     return
@@ -217,13 +211,7 @@ def to_log_file():
 
 def main():
     clear_screen()
-    print(create_header())
-    print(device_info())
-    print(network_info())
-    print(os_info())
-    print(storage_info())
-    print(processor_info())
-    print(memory_info())
+    print(get_all_output())
 
 
 if __name__ == "__main__":
