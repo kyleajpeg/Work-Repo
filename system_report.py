@@ -62,8 +62,8 @@ def device_info():
         domain = "No domain"
     string_list = []
     string_list.append(f"{GREEN}Device Information{RESET}\n")
-    string_list.append(f"Hostname:               {hostname}\n")
-    string_list.append(f"Domain:                 {domain}\n")
+    string_list.append(f"Hostname:                       {hostname}\n")
+    string_list.append(f"Domain:                         {domain}\n")
     return "".join(string_list)
 
 def network_info():
@@ -97,11 +97,11 @@ def network_info():
     
     string_list = []
     string_list.append(f"{GREEN}Network Information{RESET}\n")
-    string_list.append(f"IP Address:           {ip_addr}\n")
-    string_list.append(f"Gateway:              {gateway}\n")
-    string_list.append(f"Network Mask:         {network_mask}\n")
-    string_list.append(f"DNS1:                 {dns_servers[0]}\n")
-    string_list.append(f"DNS2:                 {dns_servers[1]}\n")
+    string_list.append(f"IP Address:                     {ip_addr}\n")
+    string_list.append(f"Gateway:                        {gateway}\n")
+    string_list.append(f"Network Mask:                   {network_mask}\n")
+    string_list.append(f"DNS1:                           {dns_servers[0]}\n")
+    string_list.append(f"DNS2:                           {dns_servers[1]}\n")
     return "".join(string_list)
 
 def os_info():
@@ -139,9 +139,9 @@ def storage_info():
             free_space = round(float(sdrive_line[3].split("G")[0])) # grabs the available GiB
     string_list = []
     string_list.append(f"{GREEN}Storage Information{RESET}\n")
-    string_list.append(f"System Drive Total:               {total_space} GiB\n")
-    string_list.append(f"System Drive Used:                {used_space} GiB\n")
-    string_list.append(f"System Drive Free:                {free_space} GiB\n")
+    string_list.append(f"System Drive Total:             {total_space} GiB\n")
+    string_list.append(f"System Drive Used:              {used_space} GiB\n")
+    string_list.append(f"System Drive Free:              {free_space} GiB\n")
     return "".join(string_list)
 
 
@@ -159,9 +159,9 @@ def processor_info():
     num_cores = num_processors * cores_per_processor # total cores is the processors * core per processor
     string_list = []
     string_list.append(f"{GREEN}Processor Information{RESET}\n")
-    string_list.append(f"CPU Model:                          {model_name}\n")
-    string_list.append(f"Number of processors:               {num_processors}\n")
-    string_list.append(f"Number of cores:                    {num_cores}\n")
+    string_list.append(f"CPU Model:                      {model_name}\n")
+    string_list.append(f"Number of processors:           {num_processors}\n")
+    string_list.append(f"Number of cores:                {num_cores}\n")
     return "".join(string_list)
 
 def memory_info():
@@ -175,18 +175,40 @@ def memory_info():
             available_ram = ram_line[5].split("G")[0] # accessed at linx index 5, also splitting
     string_list = []
     string_list.append(f"{GREEN}Memory Information{RESET}\n")
-    string_list.append(f"Total RAM:                    {total_ram} GiB\n")
-    string_list.append(f"Available RAM:                {available_ram} GiB\n")
+    string_list.append(f"Total RAM:                      {total_ram} GiB\n")
+    string_list.append(f"Available RAM:                  {available_ram} GiB\n")
     return "".join(string_list)
 
 def get_all_output():
-    # print(create_header())
-    # print(device_info())
-    # print(network_info())
-    # print(os_info())
-    # print(storage_info())
-    # print(processor_info())
-    # print(memory_info())
+    # print             ("                    "+f"{RED}System Report{RESET} - {month} {day}, {year}\n")
+
+    # string_list.append(f"Hostname:                       {hostname}\n")
+    # string_list.append(f"Domain:                         {domain}\n")
+
+    # string_list.append(f"IP Address:                     {ip_addr}\n")
+    # string_list.append(f"Gateway:                        {gateway}\n")
+    # string_list.append(f"Network Mask:                   {network_mask}\n")
+    # string_list.append(f"DNS1:                           {dns_servers[0]}\n")
+    # string_list.append(f"DNS2:                           {dns_servers[1]}\n")
+
+    # string_list.append(f"Operating System:               {os_name}\n")
+    # string_list.append(f"OS Version:                     {version_id}\n")
+    # string_list.append(f"Kernel Version:                 {kernel_version}\n")
+
+    # string_list.append(f"System Drive Total:             {total_space} GiB\n")
+    # string_list.append(f"System Drive Used:              {used_space} GiB\n")
+    # string_list.append(f"System Drive Free:              {free_space} GiB\n")
+
+    # string_list.append(f"CPU Model:                      {model_name}\n")
+    # string_list.append(f"Number of processors:           {num_processors}\n")
+    # string_list.append(f"Number of cores:                {num_cores}\n")
+
+
+    # string_list.append(f"Total RAM:                      {total_ram} GiB\n")
+    # string_list.append(f"Available RAM:                  {available_ram} GiB\n")
+
+
+
     return
 
 def to_log_file():
