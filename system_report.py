@@ -55,11 +55,13 @@ def device_info():
     result = subprocess.run(['hostname'], capture_output=True, text=True)
     hostname = result.stdout.strip()
     if '.' in hostname: # hostname and domain separated by a '.'
-        line = hostname.split('.')
+        line = hostname.split('.', 1)
         hostname = line[0]
-        domain = line[1]
+        domain = line[1] if len(line) > 1 else "No domain" # edit: can't split hostname and domain by 1 period -> myhost.mydomain.com
     else:
         domain = "No domain"
+    if domain == "localdomain":
+        domain = "localdomain (default domain)" # default domain is technically not a domain?
     string_list = []
     string_list.append(f"{GREEN}Device Information{RESET}\n")
     string_list.append(f"Hostname:                       {hostname}\n")
