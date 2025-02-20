@@ -157,9 +157,9 @@ def storage_info():
                     free_unit = unit_options[key]
     string_list = []
     string_list.append(f"{GREEN}Storage Information{RESET}\n")
-    string_list.append(f"System Drive Total:             {total_space}{total_unit}\n")
-    string_list.append(f"System Drive Used:              {used_space}{used_unit}\n")
-    string_list.append(f"System Drive Free:              {free_space}{free_unit}\n\n")
+    string_list.append(f"System Drive Total:             {total_space} {total_unit}\n")
+    string_list.append(f"System Drive Used:              {used_space} {used_unit}\n")
+    string_list.append(f"System Drive Free:              {free_space} {free_unit}\n\n")
     return "".join(string_list)
 
 
@@ -222,14 +222,19 @@ def get_all_output():
     string_list.append(memory_info())
     return "".join(string_list)
 
-def to_log_file():
-    return
+def to_log_file(output):
+    hostname = platform.node()
+    home_dir = os.path.expanduser("~")
+    log_file_path = os.path.join(home_dir, f"{hostname}_system_report.log")
+    with open(log_file_path, 'w') as file:
+        file.write(output)
 
 
 def main():
     clear_screen()
-    print(get_all_output())
-
+    all_output = get_all_output()
+    print(all_output, end="")
+    
 
 if __name__ == "__main__":
     main()
