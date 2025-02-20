@@ -176,6 +176,16 @@ def memory_info():
     string_list.append(f"Available RAM:                {available_ram} GiB\n")
     return "".join(string_list)
 
+def get_all_output():
+    # print(create_header())
+    # print(device_info())
+    # print(network_info())
+    # print(os_info())
+    # print(storage_info())
+    # print(processor_info())
+    # print(memory_info())
+    return
+
 def to_log_file():
     return
 
