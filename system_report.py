@@ -68,7 +68,7 @@ def device_info():
 
 def network_info():
     dns_servers_result = subprocess.run(['grep', 'nameserver', '/etc/resolv.conf'], capture_output=True, text=True)
-    dns_servers = [] # uses the conf file to find and store the DNS servers in the list
+    dns_servers = ["DNS not found", "DNS not found"] # uses the conf file to find and store the DNS servers in the list
     gateway_result = subprocess.run(['ip', 'r'], capture_output=True, text=True) # ip route to find gateway
     ip_result = subprocess.run(['ip', 'a'], capture_output=True, text=True) # ip all to find own ip address
 
@@ -87,7 +87,8 @@ def network_info():
     if dns_servers_result.returncode == 0:
         for line in dns_servers_result.stdout.splitlines():
             if 'nameserver' in line:
-                dns_servers.append(line.split()[1]) # the first DNS appended will be DNS 1, then DNS 2
+                dns_servers.insert(0, line.split()[1]) # the first DNS inserted will be DNS 1, then DNS 2
+                dns_servers.pop()
     
     gateway = "Gateway not found"
     for line in gateway_result.stdout.splitlines():
@@ -104,6 +105,8 @@ def network_info():
     return "".join(string_list)
 
 def os_info():
+    os_name = "Operating System Name not found"
+    version_id = "OS version not found"
     kernel_version_result = subprocess.run(['uname', '-r'], capture_output=True, text=True) # returns kernel version
     os_release_result = subprocess.run(['cat', '/etc/os-release'], capture_output=True, text=True) # operating system information in this file
     
@@ -124,6 +127,9 @@ def os_info():
     return "".join(string_list)
 
 def storage_info():
+    total_space = "Unknown"
+    used_space = "Unknown"
+    free_space = "Unknown"
     result = subprocess.run(['df', '-h'], capture_output=True, text=True) # better command to find disk usage
     for line in result.stdout.splitlines():
         if 'mapper' in line:
@@ -144,13 +150,13 @@ def processor_info():
     num_processors = 0
     for line in result.stdout.splitlines():
         if "processor" in line:
-            num_processors+=1
+            num_processors+=1 # each processor has an entry
         elif "model name" in line:
             model_name = line.strip().split(":")[1].strip() # grabs the model from the file without any spaces
         elif "cpu cores" in line:
             cores_per_processor_str = line.strip().split(":")[1].strip() # grabs the string # from the file
             cores_per_processor = int(cores_per_processor_str) # convert to int
-    num_cores = num_processors * cores_per_processor
+    num_cores = num_processors * cores_per_processor # total cores is the processors * core per processor
     string_list = []
     string_list.append(f"{GREEN}Processor Information{RESET}\n")
     string_list.append(f"CPU Model:                          {model_name}\n")
@@ -159,6 +165,8 @@ def processor_info():
     return "".join(string_list)
 
 def memory_info():
+    total_ram = "Total RAM not found"
+    available_ram = "Available RAM not found"    
     result = subprocess.run(['free', '-h'], capture_output=True, text=True) # better command to find RAM
     for line in result.stdout.splitlines():
         if 'Mem:' in line:
