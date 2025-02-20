@@ -11,7 +11,6 @@ import re
 import platform
 import ipaddress
 
-
 RED = '\033[38;5;196m'
 GREEN = '\033[38;5;46m'
 RESET = '\033[0m'
