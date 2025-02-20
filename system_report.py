@@ -49,7 +49,7 @@ def create_header(): # Creates the header for the script and displays the date
     else:
         month = "Unknown Month"
     year = date.pop()
-    return "                       "+f"{RED}System Report{RESET} - {month} {day}, {year}\n"
+    return "                       "+f"{RED}System Report{RESET} - {month} {day}, {year}\n\n"
 
 def device_info():
     result = subprocess.run(['hostname'], capture_output=True, text=True)
@@ -63,7 +63,7 @@ def device_info():
     string_list = []
     string_list.append(f"{GREEN}Device Information{RESET}\n")
     string_list.append(f"Hostname:                       {hostname}\n")
-    string_list.append(f"Domain:                         {domain}\n")
+    string_list.append(f"Domain:                         {domain}\n\n")
     return "".join(string_list)
 
 def network_info():
@@ -101,7 +101,7 @@ def network_info():
     string_list.append(f"Gateway:                        {gateway}\n")
     string_list.append(f"Network Mask:                   {network_mask}\n")
     string_list.append(f"DNS1:                           {dns_servers[0]}\n")
-    string_list.append(f"DNS2:                           {dns_servers[1]}\n")
+    string_list.append(f"DNS2:                           {dns_servers[1]}\n\n")
     return "".join(string_list)
 
 def os_info():
@@ -123,7 +123,7 @@ def os_info():
     string_list.append(f"{GREEN}Operating Sytem Information{RESET}\n")
     string_list.append(f"Operating System:               {os_name}\n")
     string_list.append(f"OS Version:                     {version_id}\n")
-    string_list.append(f"Kernel Version:                 {kernel_version}\n")
+    string_list.append(f"Kernel Version:                 {kernel_version}\n\n")
     return "".join(string_list)
 
 def storage_info():
@@ -159,7 +159,7 @@ def storage_info():
     string_list.append(f"{GREEN}Storage Information{RESET}\n")
     string_list.append(f"System Drive Total:             {total_space}{total_unit}\n")
     string_list.append(f"System Drive Used:              {used_space}{used_unit}\n")
-    string_list.append(f"System Drive Free:              {free_space}{free_unit}\n")
+    string_list.append(f"System Drive Free:              {free_space}{free_unit}\n\n")
     return "".join(string_list)
 
 
@@ -179,7 +179,7 @@ def processor_info():
     string_list.append(f"{GREEN}Processor Information{RESET}\n")
     string_list.append(f"CPU Model:                      {model_name}\n")
     string_list.append(f"Number of processors:           {num_processors}\n")
-    string_list.append(f"Number of cores:                {num_cores}\n")
+    string_list.append(f"Number of cores:                {num_cores}\n\n")
     return "".join(string_list)
 
 def memory_info():
@@ -208,18 +208,18 @@ def memory_info():
     string_list = []
     string_list.append(f"{GREEN}Memory Information{RESET}\n")
     string_list.append(f"Total RAM:                      {total_ram} {total_ram_unit}\n")
-    string_list.append(f"Available RAM:                  {available_ram} {available_ram_unit}\n")
+    string_list.append(f"Available RAM:                  {available_ram} {available_ram_unit}\n\n")
     return "".join(string_list)
 
 def get_all_output(): 
     string_list = []
-    string_list.append(create_header()+"\n")
-    string_list.append(device_info()+"\n")
-    string_list.append(network_info()+"\n")
-    string_list.append(os_info()+"\n")
-    string_list.append(storage_info()+"\n")
-    string_list.append(processor_info()+"\n")
-    string_list.append(memory_info()+"\n")
+    string_list.append(create_header())
+    string_list.append(device_info())
+    string_list.append(network_info())
+    string_list.append(os_info())
+    string_list.append(storage_info())
+    string_list.append(processor_info())
+    string_list.append(memory_info())
     return "".join(string_list)
 
 def to_log_file():
