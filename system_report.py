@@ -49,7 +49,7 @@ def create_header(): # Creates the header for the script and displays the date
     else:
         month = "Unknown Month"
     year = date.pop()
-    return "                    "+f"{RED}System Report{RESET} - {month} {day}, {year}\n"
+    return "                       "+f"{RED}System Report{RESET} - {month} {day}, {year}\n"
 
 def device_info():
     result = subprocess.run(['hostname'], capture_output=True, text=True)
@@ -134,10 +134,13 @@ def storage_info():
     used_unit = "Error: Unit not found"
     free_unit = "Error: Unit not found"
     unit_options = {
-        'G': "GiB",
+        'G': "GB",
         'K': "KB",
-        'M': "MB"
-    }
+        'M': "MB",
+        'T': "TB",
+        'P': "PB"
+
+    } # different units are used
     result = subprocess.run(['df', '-h'], capture_output=True, text=True) # better command to find disk usage
     for line in result.stdout.splitlines():
         if 'mapper' in line:
@@ -181,17 +184,31 @@ def processor_info():
 
 def memory_info():
     total_ram = "Total RAM not found"
-    available_ram = "Available RAM not found"    
+    available_ram = "Available RAM not found"
+    total_ram_unit = "Error: Unit not found"
+    available_ram_unit = "Error: Unit not found"
+    unit_options = {
+        'G': "GiB",
+        'M': "MiB",
+        'B': "B",
+        'T': "TiB",
+        'P': "PiB"
+    } # different units are used
     result = subprocess.run(['free', '-h'], capture_output=True, text=True) # better command to find RAM
     for line in result.stdout.splitlines():
         if 'Mem:' in line:
             ram_line = line.strip().split()
-            total_ram = ram_line[1].split("G")[0] # accessed at line index 1, splitting to only grab number
-            available_ram = ram_line[6].split("G")[0] # accessed at linx index 6, also splitting
+            for key in unit_options:
+                if key in ram_line[1]:
+                    total_ram = ram_line[1].split(key)[0] # accessed at line index 1, splitting to only grab number
+                    total_ram_unit = unit_options[key]
+                if key in ram_line[6]:
+                    available_ram = ram_line[6].split(key)[0] # accessed at linx index 6, also splitting
+                    available_ram_unit = unit_options[key]
     string_list = []
     string_list.append(f"{GREEN}Memory Information{RESET}\n")
-    string_list.append(f"Total RAM:                      {total_ram} GiB\n")
-    string_list.append(f"Available RAM:                  {available_ram} GiB\n")
+    string_list.append(f"Total RAM:                      {total_ram} {total_ram_unit}\n")
+    string_list.append(f"Available RAM:                  {available_ram} {available_ram_unit}\n")
     return "".join(string_list)
 
 def get_all_output(): 
