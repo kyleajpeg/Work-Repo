@@ -157,9 +157,9 @@ def storage_info():
                     free_unit = unit_options[key]
     string_list = []
     string_list.append(f"{GREEN}Storage Information{RESET}\n")
-    string_list.append(f"System Drive Total:             {total_space} {total_unit}\n")
-    string_list.append(f"System Drive Used:              {used_space} {used_unit}\n")
-    string_list.append(f"System Drive Free:              {free_space} {free_unit}\n")
+    string_list.append(f"System Drive Total:             {total_space}{total_unit}\n")
+    string_list.append(f"System Drive Used:              {used_space}{used_unit}\n")
+    string_list.append(f"System Drive Free:              {free_space}{free_unit}\n")
     return "".join(string_list)
 
 
@@ -213,13 +213,13 @@ def memory_info():
 
 def get_all_output(): 
     string_list = []
-    string_list.append(create_header())
-    string_list.append(device_info())
-    string_list.append(network_info())
-    string_list.append(os_info())
-    string_list.append(storage_info())
-    string_list.append(processor_info())
-    string_list.append(memory_info())
+    string_list.append(create_header()+"\n")
+    string_list.append(device_info()+"\n")
+    string_list.append(network_info()+"\n")
+    string_list.append(os_info()+"\n")
+    string_list.append(storage_info()+"\n")
+    string_list.append(processor_info()+"\n")
+    string_list.append(memory_info()+"\n")
     return "".join(string_list)
 
 def to_log_file():
