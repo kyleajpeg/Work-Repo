@@ -12,16 +12,11 @@ import platform
 import ipaddress
 
 
-# Need to add more comments
-#LINE UP ALL OUTPUT ! ! ! ----------------------- (also header)
 
 """
 To do list:
-Fix the spacing of output -> line up everything (and header) by copying and pasteing side by side
-implement output to log file
-double check sufficient comments
-double check functions and requirements
-ask AI to check as well ^
+
+REFER TO NOTES DOC -------------------------------------------------
 
 """
 
