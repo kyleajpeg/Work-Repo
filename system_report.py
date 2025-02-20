@@ -13,13 +13,6 @@ import ipaddress
 
 
 
-"""
-To do list:
-
-REFER TO NOTES DOC -------------------------------------------------
-
-"""
-
 RED = '\033[38;5;196m'
 GREEN = '\033[38;5;46m'
 RESET = '\033[0m'
@@ -230,7 +223,7 @@ def remove_ansi_colors(text):
 
 def to_log_file(text):
     clean_text = remove_ansi_colors(text) # removes color codes so log file isn't silly looking
-    hostname = platform.node() # gets the hostname
+    hostname = platform.node() # another way to get the hostname
     home_dir = os.path.expanduser("~") # expanding to user home directory
     log_file_path = os.path.join(home_dir, f"{hostname}_system_report.log") # log file path
     with open(log_file_path, 'w') as file: 
