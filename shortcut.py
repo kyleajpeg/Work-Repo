@@ -46,7 +46,8 @@ def main():
         '2': remove_shortcut,
         '3': shortcut_report,
         'q': lambda: False,
-        'quit': lambda: False
+        'quit': lambda: False,
+        'exit': lambda: False
     }
     while True:
         clear_screen() # Clearing terminal
@@ -61,14 +62,16 @@ def main():
                 print(result + "\n")
                 time.sleep(7)
             else:
+                print()
                 print("Quitting program: returning to terminal.")
+                print()
                 print(f"{YELLOW}Goodbye!{RESET}\n")
                 time.sleep(4)
                 clear_screen()
                 break
         else:
             print()
-            print(f'{RED}Invalid choice{RESET}, please select a number between {GREEN}1{RESET} through {GREEN}3{RESET} or type "Q/q" to exit.\n')
+            print(f'{RED}Invalid choice{RESET}, please select a number between {GREEN}1{RESET} through {GREEN}3{MAGENTA}\nor type "Q/q" to exit.{RESET}\n')
             time.sleep(5)
 
 
