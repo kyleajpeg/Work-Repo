@@ -19,13 +19,13 @@ RESET = '\033[0m'
 
 def display_menu(): # Displays the main screen
     print(f"{BLUE}          **************************************{RESET}")
-    print(f"{BLUE}          *********** {GREEN}Shortcut Creator{BLUE} ***********{RESET}")
+    print(f"{BLUE}          *********** {GREEN}Shortcut Creator{BLUE} *********{RESET}")
     print(f"{BLUE}          **************************************{RESET}")
     print(f"{GREEN}Choose an option from the menu below to begin.{RESET}")
     print(f"{MAGENTA}Menu:\n")
     print("     1 - Create a shortcut in your home directory")
     print("     2 - Remove a shortcut from your home directory")
-    print(f"     3 - Run shortcut report{RESET}")
+    print(f"     3 - Run shortcut report{RESET}\n")
   
 
 def clear_screen(): # Better readability
@@ -61,7 +61,10 @@ def main():
                 print(result + "\n")
                 time.sleep(7)
             else:
+                print("Quitting program: returning to terminal.")
                 print(f"{YELLOW}Goodbye!{RESET}\n")
+                time.sleep(4)
+                clear_screen()
                 break
         else:
             print()
