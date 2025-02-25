@@ -53,7 +53,7 @@ def main():
         clear_screen() # Clearing terminal
         display_menu()
 
-        choice = input(f'{MAGENTA}Please enter a number {GREEN}(1-3){MAGENTA} or {GREEN}"Q/q"{RESET} to quit the program: {RESET}')
+        choice = input(f'{MAGENTA}Please enter a number {GREEN}(1-3){MAGENTA} or {GREEN}"Q/q"{MAGENTA} to quit the program: {RESET}')
         choice = choice.lower()
         if choice in menu_options:
             clear_screen()
@@ -71,7 +71,7 @@ def main():
                 break
         else:
             print()
-            print(f'{RED}Invalid choice{RESET}, please select a number between {GREEN}1{RESET} through {GREEN}3{MAGENTA}\nor type "Q/q" to exit.{RESET}\n')
+            print(f'{RED}Invalid choice{RESET}, please select a number between {GREEN}1{RESET} through {GREEN}3{RESET}\nor type {GREEN}"Q/q"{RESET} to exit.\n')
             time.sleep(5)
 
 
