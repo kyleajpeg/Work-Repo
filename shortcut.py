@@ -5,9 +5,10 @@
 
 # chmod +x shortcut.py
 
-import subprocess
+from pathlib import Path
 import os
 import time
+import subprocess
 
 
 YELLOW = '\033[38;5;220m'
@@ -32,13 +33,14 @@ def clear_screen(): # Better readability
     os.system('clear') # clears terminal
 
 def create_shortcut():
-    return
+    return True
 
 def remove_shortcut():
-    return
+    return True
 
 def shortcut_report():
-    return
+    return True
+
 
 def main():
     menu_options = {
@@ -59,8 +61,7 @@ def main():
             clear_screen()
             result = menu_options[choice]()
             if result:
-                print(result + "\n")
-                time.sleep(7)
+                result
             else:
                 print()
                 print("Quitting program: returning to terminal.")
@@ -71,7 +72,7 @@ def main():
                 break
         else:
             print()
-            print(f'{RED}Invalid choice{RESET}, please select a number between {GREEN}1{RESET} through {GREEN}3{RESET}\nor type {GREEN}"Q/q"{RESET} to exit.\n')
+            print(f'{RED}Invalid choice{RESET}, please select a number between {GREEN}1{RESET} and {GREEN}3{RESET}\nor type {GREEN}"Q/q"{RESET} to exit.\n')
             time.sleep(5)
 
 
