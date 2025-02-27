@@ -137,6 +137,22 @@ def create_shortcut():
     user_continue()
     return True
 
+def find_links_by_path(path): # only checking the surface level of desktop with maxdepth at 1
+    result = subprocess.run(['find', path, '-type', 'l', '-maxdepth', '1'], capture_output=True, text=True, check=True)
+    symlinks = result.stdout.strip().split('\n')
+    # removing empty strings again
+    symlinks = [link for link in symlinks if link]
+    return symlinks
+
+def display_links(links_list):
+    for i, link in enumerate(links_list, 1):
+        # get the target path of the symbolic link using os readlink
+        target = os.readlink(link)
+        
+        # get the filename using basename
+        link_name = os.path.basename(link)
+        
+        print(f"{i}. {link_name} -> {target}")
 
 def remove_shortcut():
     print(f"{GREEN}===== Remove a Shortcut ====={RESET}\n")
@@ -145,11 +161,8 @@ def remove_shortcut():
     desktop_path = Path.home() / 'Desktop'
     
     # finding all symbolic links on desktop and putting in a list
-    try: # only checking the surface level of desktop with maxdepth at 1
-        result = subprocess.run(['find', desktop_path, '-type', 'l', '-maxdepth', '1'], capture_output=True, text=True, check=True)
-        desktop_symlinks = result.stdout.strip().split('\n')
-        # removing empty strings again
-        desktop_symlinks = [link for link in desktop_symlinks if link]
+    try: 
+        desktop_symlinks = find_links_by_path(desktop_path)
     except subprocess.SubprocessError as e:
         print(f"\n{RED}Error finding shortcuts: {RESET}\n{e}")
         user_continue()
@@ -162,15 +175,7 @@ def remove_shortcut():
     
     # display the symbolic links already on the desktop
     print(f"{BLUE}Shortcuts on the Desktop:{RESET}\n")
-    for i, link in enumerate(desktop_symlinks, 1):
-        # get the target path of the symbolic link using os readlink
-        target = os.readlink(link)
-        
-        # get the filename using basename
-        link_name = os.path.basename(link)
-        
-        print(f"{i}. {link_name} -> {target}")
-        
+    display_links(desktop_symlinks)
     
     # asking user which link to remove 
     while True:
@@ -216,12 +221,8 @@ def shortcut_report():
     # get the desktop path
     desktop_path = Path.home() / 'Desktop'
 
-    # finding all symbolic links on desktop and putting in a list
-    try: # only checking the surface level of desktop with maxdepth at 1
-        result = subprocess.run(['find', desktop_path, '-type', 'l', '-maxdepth', '1'], capture_output=True, text=True, check=True)
-        desktop_symlinks = result.stdout.strip().split('\n')
-        # removing empty strings again
-        desktop_symlinks = [link for link in desktop_symlinks if link]
+    try: 
+        desktop_symlinks = find_links_by_path(desktop_path)
     except subprocess.SubprocessError as e:
         print(f"\n{RED}Error finding shortcuts: {RESET}\n{e}")
         user_continue()
@@ -230,15 +231,10 @@ def shortcut_report():
     # print number of symbolic links/shortcuts
     print(f"The number of links is {BLUE}{len(desktop_symlinks)}{RESET}\n")
     
-    # display the symbolic links already on the deskop
+    # display the symbolic links
     print(f"{BLUE}Shortcut{RESET} -> {YELLOW}Target Path{RESET}")
     if desktop_symlinks:
-        for i, link in enumerate(desktop_symlinks, 1):
-            # get the target path of the symbolic link using os readlink
-            target = os.readlink(link)
-            # get the filename using basename
-            link_name = os.path.basename(link)
-            print(f"{i}. {link_name} -> {target}")
+        display_links(desktop_symlinks)
     
     user_continue()
     return True
