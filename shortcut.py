@@ -80,8 +80,7 @@ def create_shortcut():
         
         while True:
             try:
-                choice = input(f"\nPlease select the file you want to create a shortcut for {GREEN}(1-{len(files)}){RESET}: ")
-                print(f"Or, enter {GREEN}'Q/q'{RESET} to quit & return to the main menu")
+                choice = input(f"\nPlease select the file you want to create a shortcut for {GREEN}(1-{len(files)}){RESET}\nOr, enter {GREEN}'Q/q'{RESET} to quit & return to the main menu\n")
                 if choice.lower() == 'q':
                     print("Returning to main menu...")
                     time.sleep(3)
@@ -93,13 +92,13 @@ def create_shortcut():
                 else:
                     print(f"\n{RED}Invalid selection. Please enter a number between {GREEN}1{RED} and {GREEN}{len(files)}{RED}.{RESET}")
                     time.sleep(5.5)
-                    sys.stdout.write("\033[5A")
+                    sys.stdout.write("\033[6A")
                     sys.stdout.write("\033[J")
                     sys.stdout.flush()
             except ValueError:
                 print(f"\n{RED}Invalid input. Please enter a number {GREEN}(1-{len(files)}){RESET}")
                 time.sleep(5.5)
-                sys.stdout.write("\033[5A")
+                sys.stdout.write("\033[6A")
                 sys.stdout.write("\033[J")
                 sys.stdout.flush()
     else:
