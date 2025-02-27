@@ -87,11 +87,13 @@ def create_shortcut():
                     break
                 else:
                     print(f"\n{RED}Invalid selection. Please enter a number between {GREEN}1{RED} and {GREEN}{len(files)}{RED}.{RESET}")
+                    time.sleep(4)
                     sys.stdout.write("\033[3A")
                     sys.stdout.write("\033[J")
                     sys.stdout.flush()
             except ValueError:
                 print(f"\n{RED}Invalid input. Please enter a number {GREEN}(1-{len(files)}){RESET}")
+                time.sleep(4)
                 sys.stdout.write("\033[3A")
                 sys.stdout.write("\033[J")
                 sys.stdout.flush()
