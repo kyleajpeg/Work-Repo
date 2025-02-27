@@ -8,6 +8,7 @@
 from pathlib import Path
 import os
 import time
+import sys
 import subprocess
 
 
@@ -85,9 +86,15 @@ def create_shortcut():
                     target_path = files[choice_i]
                     break
                 else:
-                    print(f"\n{RED}Invalid selection. Please enter a number between 1 and {len(files)}.{RESET}")
+                    print(f"\n{RED}Invalid selection. Please enter a number between {GREEN}1{RED} and {GREEN}{len(files)}{RED}.{RESET}")
+                    sys.stdout.write("\033[3A")
+                    sys.stdout.write("\033[J")
+                    sys.stdout.flush()
             except ValueError:
                 print(f"\n{RED}Invalid input. Please enter a number {GREEN}(1-{len(files)}){RESET}")
+                sys.stdout.write("\033[3A")
+                sys.stdout.write("\033[J")
+                sys.stdout.flush()
     else:
         # if only one file is found, assume its the one the user is talking about and use it automatically
         target_path = files[0]
@@ -147,7 +154,7 @@ def remove_shortcut():
         return True
     
     if not desktop_symlinks: # empty list, no shortcuts, nothing to do
-        print(f"\n{YELLOW}No shortcuts found on the Desktop.{RESET}")
+        print(f"{YELLOW}No shortcuts found on the Desktop.{RESET}")
         user_continue()
         return True
     
@@ -219,7 +226,7 @@ def shortcut_report():
         return True
     
     # print number of symbolic links/shortcuts
-    print(f"The number of link is {BLUE}{len(desktop_symlinks)}{RESET}\n")
+    print(f"The number of links is {BLUE}{len(desktop_symlinks)}{RESET}\n")
     
     # display the symbolic links already on the deskop
     print(f"{BLUE}Shortcut{RESET} -> {YELLOW}Target Path{RESET}")
