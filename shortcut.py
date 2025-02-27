@@ -81,6 +81,11 @@ def create_shortcut():
         while True:
             try:
                 choice = input(f"\nPlease select the file you want to create a shortcut for {GREEN}(1-{len(files)}){RESET}: ")
+                print(f"Or, enter {GREEN}'Q/q'{RESET} to quit & return to the main menu")
+                if choice.lower() == 'q':
+                    print("Returning to main menu...")
+                    time.sleep(3)
+                    return True
                 choice_i = int(choice) - 1
                 if 0 <= choice_i < len(files):
                     target_path = files[choice_i]
@@ -88,13 +93,13 @@ def create_shortcut():
                 else:
                     print(f"\n{RED}Invalid selection. Please enter a number between {GREEN}1{RED} and {GREEN}{len(files)}{RED}.{RESET}")
                     time.sleep(5.5)
-                    sys.stdout.write("\033[4A")
+                    sys.stdout.write("\033[5A")
                     sys.stdout.write("\033[J")
                     sys.stdout.flush()
             except ValueError:
                 print(f"\n{RED}Invalid input. Please enter a number {GREEN}(1-{len(files)}){RESET}")
                 time.sleep(5.5)
-                sys.stdout.write("\033[4A")
+                sys.stdout.write("\033[5A")
                 sys.stdout.write("\033[J")
                 sys.stdout.flush()
     else:
@@ -136,6 +141,7 @@ def create_shortcut():
         print(f"{RED}Error creating shortcut: {RESET}\n{e}")
     user_continue()
     return True
+
 
 def find_links_by_path(path): # only checking the surface level of desktop with maxdepth at 1
     result = subprocess.run(['find', path, '-type', 'l', '-maxdepth', '1'], capture_output=True, text=True, check=True)
